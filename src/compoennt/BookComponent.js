@@ -14,7 +14,6 @@ const BookComponent = ({ bookName, authorName, publicationYear,onPress,onPressfa
                 resizeMode="stretch"
             >
                 <TouchableOpacity  onPress={onPressfab}>
-                    {console.log("key ====",fab)}
                <Icon style ={{alignSelf:'flex-end',bottom:10,marginRight:10}} name={fab ? "heart":"heart-outlined" }size={30} color={fab ? "red":"white"} />
                </TouchableOpacity>
             </ImageBackground>

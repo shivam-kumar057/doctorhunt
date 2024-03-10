@@ -29,6 +29,7 @@ const FavourateScreen = ({route,navigation}) => {
             <HeaderCompoennt
                 wishList
                 backPress={()=>navigation.pop()}
+                product={true}
             />
               <FlatList
                 data={route?.params?.wishlist || []}

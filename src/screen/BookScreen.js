@@ -53,6 +53,7 @@ const BookScreen = (props) => {
         )
 
     const filteredData = (text) => {
+        console.log("book===",book)
         if (text !== '') {
             // setSearchText(text)
             let filteredData = book.filter((item) => {
@@ -101,7 +102,7 @@ const BookScreen = (props) => {
                 authorName={item.authors[0]?.name || ''}
                 bookName={item?.title || ''}
                 publicationYear={item.first_publish_year || ''}
-                onPress={() => console.log("press")}
+                onPress={() => props.navigation.navigate('DetailsScreen',{item:item})}
                 onPressfab={() => favourate(item?.key)}
                 fab={favorites.includes(item?.key)}
                 key={item?.key}

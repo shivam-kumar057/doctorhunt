@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native'
 import SplashScreen from '../screen/SplashScreen'
 import BookScreen from '../screen/BookScreen'
 import FavourateScreen from '../screen/FavourateScreen';
+import DetailsScreen from '../screen/DetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ const MainStackNavigator = () => {
         SplashScreen,
         BookScreen,
         FavourateScreen,
+        DetailsScreen,
     }
 
     const screenOptions = {
