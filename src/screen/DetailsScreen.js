@@ -8,6 +8,7 @@ import BottomSheet from "../compoennt/common/BottomSheet";
 import Icon from 'react-native-vector-icons/dist/Entypo';
 
 const DetailsScreen = ({ route, navigation }) => {
+    console.log("route===")
     const ref = useRef()
     const [review, setReview] = useState('')
 
@@ -52,8 +53,9 @@ const DetailsScreen = ({ route, navigation }) => {
                     />
                 </View>
                 <View style={{ marginTop: Scale(25) }}>
-                    <Text style={{ color: '#000', fontSize: Scale(25), fontWeight: "800", textAlign: 'center' }}>A Wrinkle in Time</Text>
-                    <Text style={{ color: 'grey', fontSize: Scale(15), fontWeight: "500", textAlign: 'center' }}>Author Name</Text>
+                    <Text style={{ color: '#000', fontSize: Scale(25), fontWeight: "800", textAlign: 'center' }}>{route?.params?.item.title}</Text>
+                    <Text style={{ color: 'grey', fontSize: Scale(15), fontWeight: "500", textAlign: 'center' }}>{route?.params?.item.authors[0]?.name}</Text>
+                    <Text style={{ color: 'grey', fontSize: Scale(15), fontWeight: "500", textAlign: 'center' }}>{route?.params?.item.first_publish_year}</Text>
                 </View>
                 <ScrollView style={{ margin: Scale(5), padding: Scale(5), height: Scale(200) }}>
                     <Text style={{ textAlign: 'center' }}>{String.dummyText}</Text>

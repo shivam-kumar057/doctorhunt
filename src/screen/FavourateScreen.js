@@ -7,18 +7,12 @@ import BookComponent from "../compoennt/BookComponent";
 const FavourateScreen = ({route,navigation}) => {
     console.log("route===",route.params.wishlist)
     renderItem = ({item,index}) => {
-        // let data = {
-        //     authorName:{item.authors[0]?.name || '',
-        // }
-        // // console.log("item ===",item.title)
         return (
             <BookComponent
                authorName={item.authors[0]?.name || ''}
                bookName={item?.title || ''}
                publicationYear={item.first_publish_year || ''}
-               onPress={()=>console.log("press")}
-             
-            //    onPressfab={()=>favourate(item?.key)}
+               onPress={() =>navigation.navigate('DetailsScreen',{item:item})}
                fab ={route.params.wishlist.includes(item?.key)}
             //    key = {item?.key}
             />
