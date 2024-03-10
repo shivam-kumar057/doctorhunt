@@ -88,7 +88,6 @@ const BookScreen = (props) => {
     }
     const onChnageText = (text) => {
         setData(text)
-        console.log("data==",book)
         if(text != '') {
             const filteredData = book.filter(item =>
                 item.title.toLowerCase().includes(data.toLowerCase())
@@ -120,7 +119,7 @@ const BookScreen = (props) => {
                 style={{ alignSelf: 'center' }}
             />
                 </> : (
-                    <View style ={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                    <View style ={styles.loadinfContainer}>
                          <ActivityIndicator
                     size="large"
                     color={'gray'}
@@ -129,7 +128,6 @@ const BookScreen = (props) => {
                     </View>
                 )
             }
-
         </SafeAreaView>
     )
 }
@@ -137,6 +135,11 @@ const BookScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    loadinfContainer :{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
     }
 })
 

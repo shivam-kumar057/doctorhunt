@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet ,View,SafeAreaView, FlatList ,} from "react-native";
+import { StyleSheet ,SafeAreaView, FlatList ,} from "react-native";
 import HeaderCompoennt from "../compoennt/common/HeaderComponent";
 import BookComponent from "../compoennt/BookComponent";
 
 
 const FavourateScreen = ({route,navigation}) => {
-    console.log("route===",route.params.wishlist)
+    
     renderItem = ({item,index}) => {
         return (
             <BookComponent
@@ -14,7 +14,6 @@ const FavourateScreen = ({route,navigation}) => {
                publicationYear={item.first_publish_year || ''}
                onPress={() =>navigation.navigate('DetailsScreen',{item:item})}
                fab ={route.params.wishlist.includes(item?.key)}
-            //    key = {item?.key}
             />
         )
     }
@@ -39,7 +38,6 @@ const FavourateScreen = ({route,navigation}) => {
 const styles = StyleSheet.create({
     container :{
         flex:1,
-        //backgroundColor:'red'
     }
 })
 

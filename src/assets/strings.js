@@ -6,6 +6,7 @@ class String {
    Lorem Ipsum is simply dummy text
    
   `
+  static WishList = "WishList"
   
 }
 

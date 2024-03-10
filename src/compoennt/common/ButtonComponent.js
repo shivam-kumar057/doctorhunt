@@ -57,8 +57,6 @@ const styles = StyleSheet.create({
         width: 15,
         left: 5,
         alignSelf: 'center',
-        // bottom: 1,
-        // top:2
     }
 })
 export default ButtonComponent

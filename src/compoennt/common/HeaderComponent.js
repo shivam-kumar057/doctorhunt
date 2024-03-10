@@ -3,6 +3,7 @@ import { StyleSheet , TouchableOpacity, View,Text } from "react-native";
 import Scale from "../../utils/Scale";
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import Icon2 from 'react-native-vector-icons/dist/AntDesign';
+import String from "../../assets/strings";
 const HeaderCompoennt = ({onPressWishList,wishList,backPress,product}) => {
     return (
         <View style ={styles.headingStyle}>
@@ -14,7 +15,7 @@ const HeaderCompoennt = ({onPressWishList,wishList,backPress,product}) => {
                          </TouchableOpacity>
                          {
                             product && (
-                                <Text style ={{left:10 , fontSize:Scale(20),color:'black',fontWeight:'bold'}}>WishList</Text>
+                                <Text style ={{left:10 , fontSize:Scale(20),color:'black',fontWeight:'bold'}}>{String.WishList}</Text>
                             )
                          }
                     </View>
