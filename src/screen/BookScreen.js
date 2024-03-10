@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, View, Text, SafeAreaView, FlatList } from 'react-native'
+import { StyleSheet, View, Text, SafeAreaView, FlatList, ActivityIndicator } from 'react-native'
 import ApiBuilder from '../services/ApiBuilder'
 import { apiGetMethod } from '../services/ApiConstant'
 import HeaderCompoennt from '../compoennt/common/HeaderComponent'
 import HeadingComponent from '../compoennt/common/HeadingCompoennt'
 import SearchComponent from '../compoennt/common/SearchComponent'
 import BookComponent from '../compoennt/BookComponent'
-import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchBookData } from '../redux/action/BookAction'
 import { connect } from 'react-redux';
 import Preferences from '../utils/LocalStorage'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -20,50 +18,29 @@ const BookScreen = (props) => {
     const [book, setBook] = useState([])
     const [data, setData] = useState('')
     const [favorites, setFavorites] = useState([]);
+    const [loading,setLoading] = useState(true)
 
     useEffect(() => {
-        // props.fetchBookData()
         loadFavorites();
         bookscrees()
     }, [])
 
     useEffect(() => {
         saveFavorites();
+
     }, [favorites]);
 
     const bookscrees = () => {
         var requestOptions = {
             method: apiGetMethod,
-            //headers: header,
         };
         ApiBuilder.getResponse(requestOptions).then((response) => {
+            console.log("response ===",response)
             if (response) {
+                setLoading(false)
                 setBook(response.works)
             }
         })
-    }
-
-    const debouncingConcept =
-        useCallback(
-            debounce(textParam => {
-                console.log("textparams===", textParam)
-                filteredData(textParam)
-            }, 500),
-            [],
-        )
-
-    const filteredData = (text) => {
-        console.log("book===",book)
-        if (text !== '') {
-            // setSearchText(text)
-            let filteredData = book.filter((item) => {
-                return item.title.toLowerCase().includes(text);
-            })
-            setBook(filteredData)
-            console.log("filteredData===", filteredData)
-        } else (
-            bookscrees()
-        )
     }
 
     const favourate = (itemId) => {
@@ -111,11 +88,22 @@ const BookScreen = (props) => {
     }
     const onChnageText = (text) => {
         setData(text)
-        debouncingConcept(text)
+        console.log("data==",book)
+        if(text != '') {
+            const filteredData = book.filter(item =>
+                item.title.toLowerCase().includes(data.toLowerCase())
+              );
+              setBook(filteredData);
+        }  else {
+            bookscrees()
+        }
     }
+    
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderCompoennt
+            {
+                !loading ? <>
+                    <HeaderCompoennt
                 onPressWishList={() => props.navigation.navigate('FavourateScreen', { wishlist: book.filter((item) => favorites.includes(item.key)) })}
             />
             <HeadingComponent />
@@ -123,7 +111,7 @@ const BookScreen = (props) => {
                 onChangeText={onChnageText}
                 value={data}
             />
-            {/* { console.log("book========",book)} */}
+    
             <FlatList
                 data={book}
                 keyExtractor={(item) => item.id}
@@ -131,6 +119,16 @@ const BookScreen = (props) => {
                 numColumns={2}
                 style={{ alignSelf: 'center' }}
             />
+                </> : (
+                    <View style ={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                         <ActivityIndicator
+                    size="large"
+                    color={'gray'}
+                    style={{ marginLeft: 6 }}
+                  />
+                    </View>
+                )
+            }
 
         </SafeAreaView>
     )
