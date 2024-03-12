@@ -57,21 +57,22 @@ const DetailsScreen = ({ route, navigation }) => {
                     <Text style={styles.authorText}>{route?.params?.item?.first_publish_year}</Text>
                 </View>
                 <ScrollView style={styles.discriptionView}>
-                    <Text style={{ textAlign: 'center' }}>{String.dummyText}</Text>
+                    <Text style={{ textAlign: 'center' ,color:'black'}}>{String.dummyText}</Text>
                 </ScrollView>
                 <View style={styles.reviewStyle}>
-                    <Text style={{ fontSize: Scale(20) }}>Review : <Text style={{ fontSize: Scale(14) }}>{review}</Text></Text>
+                    <Text style={{ fontSize: Scale(20),color:'black' }}>Review : <Text style={{ fontSize: Scale(14),color:'black' }}>{review}</Text></Text>
 
                 </View>
                 <ButtonComponent
                     buttonStyle={styles.addButton}
                     buttonText={"Add Review"}
                     onPress={() => ref.current.open()}
+                    buttonTextStyle={{color:'black'}}
                 />
             </SafeAreaView>
             <BottomSheet
                 refs={ref}
-                height={Platform.OS === 'ios' ? 250 : 200}
+                height={Platform.OS === 'ios' ? Scale(250) : Scale(200)}
                 openJSX={openReview()}
                 openDuration={250}
             />

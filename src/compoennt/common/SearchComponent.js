@@ -9,6 +9,7 @@ const SearchComponent = ({value,onChangeText}) => {
         <View style ={styles.container}>
              <TextInput
                 placeholder="Search book"
+                placeholderTextColor={"black"}
                 style ={{width:'80%',  padding :Platform.OS === 'ios' && Scale(18)}}
                 value={value}
                 onChangeText={onChangeText}

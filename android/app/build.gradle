@@ -89,7 +89,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+         release {
+                storeFile file('doctorhunt.keystore')
+                storePassword "Shivam@1234"
+                keyAlias 'doctorhunt'
+                keyPassword "Shivam@1234"
     }
+    }
+   
     buildTypes {
         debug {
             signingConfig signingConfigs.debug

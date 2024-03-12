@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { StyleSheet, View, Text, SafeAreaView, FlatList, ActivityIndicator } from 'react-native'
 import ApiBuilder from '../services/ApiBuilder'
 import { apiGetMethod } from '../services/ApiConstant'
@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchBookData } from '../redux/action/BookAction'
 import { connect } from 'react-redux';
 import Preferences from '../utils/LocalStorage'
+import BottomSheet from '../compoennt/common/BottomSheet'
+import Scale from '../utils/Scale'
+import Icon from 'react-native-vector-icons/dist/Entypo';
 
 
 
@@ -19,11 +22,22 @@ const BookScreen = (props) => {
     const [data, setData] = useState('')
     const [favorites, setFavorites] = useState([]);
     const [loading,setLoading] = useState(true)
+    const ref =  useRef()
+    const [removeWishList,setRemoveWishList] = useState(false)
 
     useEffect(() => {
         loadFavorites();
         bookscrees()
+        props.fetchBookData()
     }, [])
+
+    const datas =  useCallback(()=>{
+          if(select) {
+            setBook(select)
+          }
+    },[book])
+
+
 
     useEffect(() => {
         saveFavorites();
@@ -43,7 +57,18 @@ const BookScreen = (props) => {
         })
     }
 
-    const favourate = (itemId) => {
+    // const favourate = (itemId) => {
+    //     const isFavorite = favorites.includes(itemId);
+    //     if (isFavorite) {
+    //         const updatedFavorites = favorites.filter((id) => id !== itemId);
+    //         setFavorites(updatedFavorites);
+    //     } else {
+    //         const updatedFavorites = [...favorites, itemId];
+    //         setFavorites(updatedFavorites);
+    //     }
+    // }
+
+    const favourate = useCallback((itemId) => {
         const isFavorite = favorites.includes(itemId);
         if (isFavorite) {
             const updatedFavorites = favorites.filter((id) => id !== itemId);
@@ -52,7 +77,7 @@ const BookScreen = (props) => {
             const updatedFavorites = [...favorites, itemId];
             setFavorites(updatedFavorites);
         }
-    }
+      }, [favorites]);
 
     const saveFavorites = async () => {
         try {
@@ -79,10 +104,14 @@ const BookScreen = (props) => {
                 authorName={item.authors[0]?.name || ''}
                 bookName={item?.title || ''}
                 publicationYear={item.first_publish_year || ''}
-                onPress={() => props.navigation.navigate('DetailsScreen',{item:item})}
+                onPress={() => {
+                    ref.current.close()
+                    props.navigation.navigate('DetailsScreen',{item:item})
+                }}
                 onPressfab={() => favourate(item?.key)}
                 fab={favorites.includes(item?.key)}
                 key={item?.key}
+                removeWishList = {removeWishList}
             />
         )
     }
@@ -97,13 +126,49 @@ const BookScreen = (props) => {
             bookscrees()
         }
     }
+    onPressClose = (isclose) => {
+         if(isclose) {
+            setRemoveWishList(!removeWishList)
+            ref.current.close()
+         }
+      
+    }
+
+    const openWishList = () => {
+        return (
+            <>
+              <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:Scale(20),alignItems:'center'}}>
+                <Text style={{fontSize:Scale(30)}}>WishList</Text>
+              <Icon  onPress={()=>onPressClose('close')} style ={{}} name={"cross" }size={50} color={'black'} />
+              </View>
+            <FlatList
+                data={book.filter((item) => favorites.includes(item.key)) }
+                keyExtractor={(item) => item.id}
+                renderItem={renderItem}
+                numColumns={2}
+                style={{ alignSelf: 'center' }}
+            />
+            </>
+        )
+    }
+
+    const openWishListData = (isopen) => {
+        if(isopen) {
+            ref.current.open()
+            setRemoveWishList(!removeWishList)
+        }
+      
+        
+    }
     
     return (
         <SafeAreaView style={styles.container}>
             {
                 !loading ? <>
                     <HeaderCompoennt
-                onPressWishList={() => props.navigation.navigate('FavourateScreen', { wishlist: book.filter((item) => favorites.includes(item.key)) })}
+
+                    onPressWishList={()=>openWishListData("isopen")}
+               // onPressWishList={() => props.navigation.navigate('FavourateScreen', { wishlist: book.filter((item) => favorites.includes(item.key)) })}
             />
             <HeadingComponent />
             <SearchComponent
@@ -128,6 +193,12 @@ const BookScreen = (props) => {
                     </View>
                 )
             }
+             <BottomSheet
+                refs={ref}
+                height={Platform.OS === 'ios' ? Scale(800) : Scale(800)}
+                openJSX={openWishList()}
+                openDuration={250}
+            />
         </SafeAreaView>
     )
 }

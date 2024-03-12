@@ -11,8 +11,10 @@ const BottomSheet = ({refs,height,duration,openJSX}) => {
         customStyles={{
             container: styles.containerStyle
         }}
+        closeOnPressMask={false}
     >
       {openJSX}
+
     </RBSheet>
     )
 }

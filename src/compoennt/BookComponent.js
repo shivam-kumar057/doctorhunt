@@ -3,19 +3,26 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground } from
 import Scale from "../utils/Scale";
 import Icon from 'react-native-vector-icons/dist/Entypo';
 
-const BookComponent = ({ bookName, authorName, publicationYear,onPress,onPressfab ,fab,key}) => {
+const BookComponent = ({ bookName, authorName, publicationYear,onPress,onPressfab ,fab,key,removeWishList}) => {
     return (
         <TouchableOpacity onPress={onPress} style={{ width: Scale(190), backgroundColor: '#FFF', margin: Scale(5), borderRadius: Scale(8), }}>
             <ImageBackground
                 source={{
                     uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-nNTRoHLNRlEpD-1M5TYwXpa167wlinCYUw&usqp=CAU'
                 }}
-                style={{ width: Scale(190), height: Scale(250),justifyContent:'flex-end' }}
+                style={{ width: Scale(190), height: Scale(250),justifyContent:'flex-end',paddingVertical:20 }}
                 resizeMode="stretch"
             >
-                <TouchableOpacity  onPress={onPressfab}>
-               <Icon style ={{alignSelf:'flex-end',bottom:10,marginRight:10}} name={fab ? "heart":"heart-outlined" }size={30} color={fab ? "red":"white"} />
-               </TouchableOpacity>
+                {
+                    removeWishList  ? (
+                        <Icon  onPress={onPressfab} style ={{alignSelf:'flex-end',bottom:10,marginRight:10}} name={"cross" }size={30} color={'white'} />
+                    ) :(
+                        <Icon onPress={onPressfab} style ={{alignSelf:'flex-end',bottom:10,marginRight:10}} name={fab ? "heart":"heart-outlined" }size={30} color={fab ? "red":"white"} />
+                    )
+                }
+               
+              
+              
             </ImageBackground>
             <View style={{ padding: Scale(10), }}>
                 <Text style={{ color: '#000', fontSize: Scale(17), fontWeight: "600" }}>{bookName}</Text>
