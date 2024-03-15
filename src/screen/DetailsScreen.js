@@ -6,10 +6,12 @@ import String from "../assets/strings";
 import HeaderCompoennt from "../compoennt/common/HeaderComponent";
 import BottomSheet from "../compoennt/common/BottomSheet";
 import Icon from 'react-native-vector-icons/dist/Entypo';
+import ScreenGradient from "../compoennt/common/ScreenGradient";
 
 const DetailsScreen = ({ route, navigation }) => {
     const ref = useRef()
     const [review, setReview] = useState('')
+    
 
     const openReview = () => {
         return (
@@ -36,7 +38,8 @@ const DetailsScreen = ({ route, navigation }) => {
         )
     }
     return (
-        <ScrollView>
+       <ScreenGradient>
+             <ScrollView >
             <SafeAreaView style={styles.container}>
                 <HeaderCompoennt
                     wishList={true}
@@ -56,9 +59,9 @@ const DetailsScreen = ({ route, navigation }) => {
                     <Text style={styles.authorText}>{route?.params?.item?.authors[0]?.name}</Text>
                     <Text style={styles.authorText}>{route?.params?.item?.first_publish_year}</Text>
                 </View>
-                <ScrollView style={styles.discriptionView}>
+               
                     <Text style={{ textAlign: 'center' ,color:'black'}}>{String.dummyText}</Text>
-                </ScrollView>
+               
                 <View style={styles.reviewStyle}>
                     <Text style={{ fontSize: Scale(20),color:'black' }}>Review : <Text style={{ fontSize: Scale(14),color:'black' }}>{review}</Text></Text>
 
@@ -77,6 +80,7 @@ const DetailsScreen = ({ route, navigation }) => {
                 openDuration={250}
             />
         </ScrollView>
+       </ScreenGradient>
     )
 }
 

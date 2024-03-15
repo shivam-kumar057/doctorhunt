@@ -38,7 +38,7 @@ const SplashScreen = ({navigation}) => {
         }).start()
     }
     return (
-            //  <ScreenGradient>
+              <ScreenGradient>
                  <ImageBackground style ={styles.container}>
                      {
                         moveUIs && (
@@ -55,7 +55,7 @@ const SplashScreen = ({navigation}) => {
                          />
                      </Animated.View>
                  </ImageBackground>
-            //  </ScreenGradient>
+              </ScreenGradient>
     )
 }
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         flex:1,
        justifyContent:'center',
        alignItems:'center',
-        backgroundColor:'white'
+       // backgroundColor:'white'
     }
 })
 

@@ -15,7 +15,11 @@ export const fetchBookData = () => {
           };
         ApiBuilder.getResponse(requestOptions).then((response)=> {
             if(response) {
-                dispatch({ type: 'setBook', payload: response?.works || []})
+                dispatch({ 
+                  type: 'setBook', 
+                  payload: response?.works || [] , loading:false
+                })
+             
             }
         })
       } catch (e) {

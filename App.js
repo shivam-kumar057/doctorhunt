@@ -11,11 +11,13 @@ LogBox.ignoreLogs(['Warning: ...']);
 const App = () => {
     const configData =  store()
     return (
-        <Provider store={configData}>
+       <ScreenGradient>
+           <Provider store={configData}>
         <SafeAreaView style ={styles.container}>
             <MainStackNavigator/>
         </SafeAreaView>
         </Provider>
+       </ScreenGradient>
     )
 }
 

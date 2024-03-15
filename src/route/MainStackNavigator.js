@@ -19,7 +19,9 @@ const MainStackNavigator = () => {
     }
 
     const screenOptions = {
-        headerShown: false
+        headerShown: false,
+       //animation: 'slide_from_left',
+       presentation: 'card',
     }
 
     const stackScreen = () => {
